@@ -1,0 +1,24 @@
+{
+  "data_path": "c:\\Users\\ELJOE\\Desktop\\project\\data\\processed",
+  "image_size": 224,
+  "num_classes": 4,
+  "class_names": [
+    "Cyst",
+    "Normal",
+    "Stone",
+    "Tumor"
+  ],
+  "mean": [
+    0.14509323239326477,
+    0.14509248733520508,
+    0.14509360492229462
+  ],
+  "std": [
+    0.2177080661058426,
+    0.21770790219306946,
+    0.21770821511745453
+  ],
+  "train_size": 9411,
+  "val_size": 2017,
+  "test_size": 2017
+}
