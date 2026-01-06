@@ -1,6 +1,6 @@
 # Kidney CT Scan Classification
 
-Deep learning project for classifying kidney CT scan images into four categories: **Cyst**, **Normal**, **Stone**, and **Tumor**.
+Deep learning and machine learning project for classifying kidney CT scan images into four categories: **Cyst**, **Normal**, **Stone**, and **Tumor**.
 
 ## Setup Guide
 
@@ -13,7 +13,8 @@ Deep learning project for classifying kidney CT scan images into four categories
 
 1. **Clone/Download the project**
 ```bash
-cd project
+git clone https://github.com/youssef-Araby/machine-project-term1.git
+cd machine-project-term1
 ```
 
 2. **Create virtual environment**
@@ -39,6 +40,7 @@ pip install numpy pandas matplotlib seaborn scikit-learn tqdm pillow timm
 03_custom_cnn.ipynb                → Train Custom CNN
 04_resnet50.ipynb                  → Train ResNet-50
 05_densenet121.ipynb               → Train DenseNet-121
+06_ml_models.ipynb                 → Train ML models (SVM, KNN, Random Forest, Logistic Regression)
 ```
 
 ---
@@ -64,7 +66,8 @@ project/
 │   ├── 02_efficientnet_b0.ipynb
 │   ├── 03_custom_cnn.ipynb
 │   ├── 04_resnet50.ipynb
-│   └── 05_densenet121.ipynb
+│   ├── 05_densenet121.ipynb
+│   └── 06_ml_models.ipynb
 │
 ├── outputs/
 │   ├── figures/                    # Data analysis plots
@@ -81,10 +84,14 @@ project/
 │   │   ├── model.pth
 │   │   ├── training_curves.png
 │   │   └── confusion_matrix.png
-│   └── densenet/
-│       ├── model.pth
-│       ├── training_curves.png
-│       └── confusion_matrix.png
+│   ├── densenet/
+│   │   ├── model.pth
+│   │   ├── training_curves.png
+│   │   └── confusion_matrix.png
+│   └── ml_models/
+│       ├── best_model.pkl
+│       ├── confusion_matrices.png
+│       └── ml_vs_dl_comparison.png
 │
 └── README.md
 ```
@@ -95,10 +102,11 @@ project/
 
 ### Purpose
 
-This project evaluates multiple deep learning architectures for automated kidney disease classification from CT scan images. The goal is to compare:
+This project evaluates multiple deep learning and classical machine learning approaches for automated kidney disease classification from CT scan images. The goal is to compare:
 
 1. **Transfer Learning** (EfficientNet-B0, ResNet-50, DenseNet-121) - Pretrained on ImageNet with frozen backbones
 2. **Custom Architecture** (SimpleCNN) - Trained from scratch on medical imaging data
+3. **Classical ML** (SVM, KNN, Random Forest, Logistic Regression) - Traditional machine learning baselines
 
 ### Dataset Summary
 
@@ -121,15 +129,26 @@ This project evaluates multiple deep learning architectures for automated kidney
 | DenseNet-121 | ~263K | Frozen | 10 | 94-97% |
 | Custom CNN | ~700K | N/A | 40 | 85-92% |
 
+### Machine Learning Models Comparison
+
+| Model | Type | Features | Expected Accuracy |
+|-------|------|----------|-------------------|
+| SVM (RBF) | Classical ML | Flattened pixels (64×64) | 70-85% |
+| KNN (k=5) | Classical ML | Flattened pixels (64×64) | 65-80% |
+| Random Forest | Classical ML | Flattened pixels (64×64) | 70-85% |
+| Logistic Regression | Classical ML | Flattened pixels (64×64) | 60-75% |
+
 ### Key Findings
 
 1. **Transfer Learning Dominance**: Pretrained models significantly outperform custom CNN due to rich feature representations learned from ImageNet.
 
-2. **Frozen Backbone Efficiency**: Training only the classifier head (last layer) is sufficient for this task, reducing training time from hours to minutes.
+2. **Deep Learning vs Classical ML**: Neural networks dramatically outperform classical ML algorithms (SVM, KNN, RF, LR) on this image classification task. Classical ML relies on flattened pixel features which lose spatial information critical for medical imaging.
 
-3. **Data Quality Impact**: Duplicate removal and proper stratification ensure unbiased evaluation across all classes.
+3. **Frozen Backbone Efficiency**: Training only the classifier head (last layer) is sufficient for this task, reducing training time from hours to minutes.
 
-4. **GPU Optimization**: RAM caching of preprocessed tensors eliminates I/O bottleneck, achieving near 100% GPU utilization.
+4. **Data Quality Impact**: Duplicate removal and proper stratification ensure unbiased evaluation across all classes.
+
+5. **GPU Optimization**: RAM caching of preprocessed tensors eliminates I/O bottleneck, achieving near 100% GPU utilization.
 
 ### Training Configuration
 

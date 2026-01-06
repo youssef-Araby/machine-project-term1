@@ -8,6 +8,7 @@ data/processed/
 # Models
 outputs/**/*.pth
 outputs/**/*.pt
+outputs/**/*.pkl
 
 # Python
 __pycache__/
