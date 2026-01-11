@@ -1,0 +1,7 @@
+{
+  "model_name": "EfficientNet-B0",
+  "test_accuracy": 0.991571641051066,
+  "trainable_params": 328964,
+  "total_params": 4336512,
+  "epochs": 20
+}

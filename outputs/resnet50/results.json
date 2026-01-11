@@ -1,7 +1,0 @@
-{
-  "model_name": "ResNet-50",
-  "val_accuracy": 0.9643034209221616,
-  "test_accuracy": 0.9593455627169063,
-  "trainable_params": 525572,
-  "epochs": 10
-}

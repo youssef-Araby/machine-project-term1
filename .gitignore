@@ -1,11 +1,8 @@
 # Data
 data/raw-2D-CT-Kidney/
 data/processed/
-*.jpg
-*.png
-*.jpeg
 
-# Models
+# Models (keep images, ignore model files)
 outputs/**/*.pth
 outputs/**/*.pt
 outputs/**/*.pkl

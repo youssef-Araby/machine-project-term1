@@ -1,5 +1,5 @@
 {
-  "data_path": "c:\\Users\\ELJOE\\Desktop\\project\\data\\processed",
+  "data_path": "c:\\Users\\ELJOE\\Desktop\\masters\\machine\\project\\data\\processed",
   "image_size": 224,
   "num_classes": 4,
   "class_names": [
@@ -19,6 +19,6 @@
     0.21770821511745453
   ],
   "train_size": 9411,
-  "val_size": 2017,
-  "test_size": 2017
+  "test_size": 4034,
+  "split_ratio": "70/30"
 }

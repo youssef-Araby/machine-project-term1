@@ -1,7 +1,0 @@
-{
-  "model_name": "EfficientNet-B0",
-  "val_accuracy": 0.9831432821021319,
-  "test_accuracy": 0.9791769955379276,
-  "trainable_params": 328964,
-  "epochs": 10
-}

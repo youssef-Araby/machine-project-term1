@@ -1,0 +1,8 @@
+{
+  "model_name": "Random Forest",
+  "train_accuracy": 1.0,
+  "cv_mean": 0.9991500663411035,
+  "cv_std": 0.0007948893511780176,
+  "test_accuracy": 0.9995042141794744,
+  "train_time": 1.178889513015747
+}

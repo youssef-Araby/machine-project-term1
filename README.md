@@ -2,6 +2,8 @@
 
 Deep learning and machine learning project for classifying kidney CT scan images into four categories: **Cyst**, **Normal**, **Stone**, and **Tumor**.
 
+**Dataset**: [2D CT Kidney for Classification](https://www.kaggle.com/datasets/fizzazaitoonbsds2022/2d-ct-kidney-for-classification)
+
 ## Setup Guide
 
 ### Prerequisites
@@ -17,30 +19,29 @@ git clone https://github.com/youssef-Araby/machine-project-term1.git
 cd machine-project-term1
 ```
 
-2. **Create virtual environment**
-```bash
-python -m venv venv
-venv\Scripts\activate  # Windows
-# source venv/bin/activate  # Linux/Mac
-```
-
-3. **Install dependencies**
+2. **Install dependencies**
 ```bash
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-pip install numpy pandas matplotlib seaborn scikit-learn tqdm pillow timm
+pip install numpy matplotlib seaborn scikit-learn tqdm pillow timm
 ```
 
-4. **Download dataset**
-- Place the CT-Kidney dataset in `data/raw-2D-CT-Kidney/` with subfolders: `Cyst/`, `Normal/`, `Stone/`, `Tumor/`
+3. **Download and prepare dataset**
+   - Download the dataset from [Kaggle](https://www.kaggle.com/datasets/fizzazaitoonbsds2022/2d-ct-kidney-for-classification)
+   - Extract and place in `data/raw-2D-CT-Kidney/` with the following structure:
+   ```
+   data/
+   └── raw-2D-CT-Kidney/
+       ├── Cyst/
+       ├── Normal/
+       ├── Stone/
+       └── Tumor/
+   ```
 
-5. **Run notebooks in order**
+4. **Run notebooks in order**
 ```
 01_data_analysis_processing.ipynb  → Preprocess data, remove duplicates, create splits
-02_efficientnet_b0.ipynb           → Train EfficientNet-B0
-03_custom_cnn.ipynb                → Train Custom CNN
-04_resnet50.ipynb                  → Train ResNet-50
-05_densenet121.ipynb               → Train DenseNet-121
-06_ml_models.ipynb                 → Train ML models (SVM, KNN, Random Forest, Logistic Regression)
+02_deep_learning_models.ipynb      → Train all DL models (EfficientNet, ResNet, DenseNet, Custom CNN)
+03_ml_models.ipynb                 → Train ML models (SVM, KNN, Random Forest, Logistic Regression) with 5-Fold CV
 ```
 
 ---
@@ -50,47 +51,48 @@ pip install numpy pandas matplotlib seaborn scikit-learn tqdm pillow timm
 ```
 project/
 ├── data/
-│   ├── raw-2D-CT-Kidney/          # Original dataset
+│   ├── raw-2D-CT-Kidney/          # Original dataset (download from Kaggle)
 │   │   ├── Cyst/
 │   │   ├── Normal/
 │   │   ├── Stone/
 │   │   └── Tumor/
-│   ├── processed/                  # After preprocessing
-│   │   ├── train/                  # 70% stratified
-│   │   ├── val/                    # 15% stratified
-│   │   └── test/                   # 15% stratified
+│   ├── processed/                  # After running notebook 01
+│   │   ├── train/                  # 70% (9,411 images)
+│   │   └── test/                   # 30% (4,034 images)
 │   └── dataset_config.json         # Mean, std, paths, class info
 │
 ├── notebooks/
 │   ├── 01_data_analysis_processing.ipynb
-│   ├── 02_efficientnet_b0.ipynb
-│   ├── 03_custom_cnn.ipynb
-│   ├── 04_resnet50.ipynb
-│   ├── 05_densenet121.ipynb
-│   └── 06_ml_models.ipynb
+│   ├── 02_deep_learning_models.ipynb
+│   └── 03_ml_models.ipynb
 │
 ├── outputs/
-│   ├── figures/                    # Data analysis plots
-│   │   └── data_summary.png
-│   ├── efficientnet/
-│   │   ├── model.pth
-│   │   ├── training_curves.png
-│   │   └── confusion_matrix.png
-│   ├── custom_cnn/
-│   │   ├── model.pth
-│   │   ├── training_curves.png
-│   │   └── confusion_matrix.png
-│   ├── resnet50/
-│   │   ├── model.pth
-│   │   ├── training_curves.png
-│   │   └── confusion_matrix.png
-│   ├── densenet/
-│   │   ├── model.pth
-│   │   ├── training_curves.png
-│   │   └── confusion_matrix.png
-│   └── ml_models/
+│   ├── dl/                         # Deep learning outputs
+│   │   ├── efficientnetb0/
+│   │   │   ├── model.pth
+│   │   │   ├── results.json
+│   │   │   ├── training_curves.png
+│   │   │   └── confusion_matrix.png
+│   │   ├── resnet50/
+│   │   ├── densenet121/
+│   │   ├── customcnn/
+│   │   ├── dl_results.json         # Combined DL results
+│   │   └── dl_model_comparison.png
+│   │
+│   └── ml/                         # Machine learning outputs
+│       ├── svm_linear/
+│       │   ├── model.pkl
+│       │   ├── results.json
+│       │   └── confusion_matrix.png
+│       ├── svm_rbf/
+│       ├── svm_poly/
+│       ├── knn_manual_k5/
+│       ├── random_forest/
+│       ├── logistic_regression/
+│       ├── ml_results.json         # Combined ML results
 │       ├── best_model.pkl
 │       ├── confusion_matrices.png
+│       ├── accuracy_comparison.png
 │       └── ml_vs_dl_comparison.png
 │
 └── README.md
@@ -100,80 +102,117 @@ project/
 
 ## Results & Analysis
 
-### Purpose
-
-This project evaluates multiple deep learning and classical machine learning approaches for automated kidney disease classification from CT scan images. The goal is to compare:
-
-1. **Transfer Learning** (EfficientNet-B0, ResNet-50, DenseNet-121) - Pretrained on ImageNet with frozen backbones
-2. **Custom Architecture** (SimpleCNN) - Trained from scratch on medical imaging data
-3. **Classical ML** (SVM, KNN, Random Forest, Logistic Regression) - Traditional machine learning baselines
-
 ### Dataset Summary
 
 | Split | Images | Percentage |
 |-------|--------|------------|
-| Train | ~8,400 | 70% |
-| Validation | ~1,800 | 15% |
-| Test | ~1,800 | 15% |
+| Train | 9,411 | 70% |
+| Test | 4,034 | 30% |
 
+- **Total**: 13,445 unique images (after duplicate removal via MD5 hashing)
 - **Classes**: Cyst, Normal, Stone, Tumor (4 classes)
-- **Preprocessing**: Duplicate removal via MD5 hashing, stratified splitting
-- **Normalization**: Dataset-specific mean/std computed from training set only
+- **Image Size**: 224×224 pixels
+- **Preprocessing**: Stratified splitting, dataset-specific normalization
 
-### Model Comparison
+### Deep Learning Models
 
-| Model | Trainable Params | Backbone | Epochs | Expected Accuracy |
-|-------|-----------------|----------|--------|-------------------|
-| EfficientNet-B0 | ~330K | Frozen | 10 | 95-98% |
-| ResNet-50 | ~525K | Frozen | 10 | 94-97% |
-| DenseNet-121 | ~263K | Frozen | 10 | 94-97% |
-| Custom CNN | ~700K | N/A | 40 | 85-92% |
+| Model | Backbone | Epochs | Description |
+|-------|----------|--------|-------------|
+| EfficientNet-B0 | Frozen (timm) | 20 | Transfer learning with custom classifier |
+| ResNet-50 | Frozen (torchvision) | 20 | Transfer learning with custom classifier |
+| DenseNet-121 | Frozen (torchvision) | 20 | Transfer learning with custom classifier |
+| Custom CNN | N/A | 100 | 4-stage CNN trained from scratch |
 
-### Machine Learning Models Comparison
+### Machine Learning Models (5-Fold Cross-Validation)
 
-| Model | Type | Features | Expected Accuracy |
-|-------|------|----------|-------------------|
-| SVM (RBF) | Classical ML | Flattened pixels (64×64) | 70-85% |
-| KNN (k=5) | Classical ML | Flattened pixels (64×64) | 65-80% |
-| Random Forest | Classical ML | Flattened pixels (64×64) | 70-85% |
-| Logistic Regression | Classical ML | Flattened pixels (64×64) | 60-75% |
+| Model | Features | Description |
+|-------|----------|-------------|
+| SVM (Linear) | PCA (100 components) | LinearSVC with max_iter=5000 |
+| SVM (RBF) | PCA (100 components) | SVC with RBF kernel |
+| SVM (Poly) | PCA (100 components) | SVC with polynomial kernel (degree=3) |
+| KNN (Manual) | PCA (100 components) | Custom implementation with vectorized distance |
+| Random Forest | PCA (100 components) | 100 trees, max_depth=15 |
+| Logistic Regression | PCA (100 components) | max_iter=2000 |
+
+**Note**: ML models use PCA for dimensionality reduction (224×224×3 = 150,528 → 100 features) to speed up training.
 
 ### Key Findings
 
-1. **Transfer Learning Dominance**: Pretrained models significantly outperform custom CNN due to rich feature representations learned from ImageNet.
+1. **Classical ML Performance**: With PCA preprocessing, classical ML models achieve competitive accuracy on this dataset due to the visually distinct classes (Cyst, Normal, Stone, Tumor have clear texture and intensity differences).
 
-2. **Deep Learning vs Classical ML**: Neural networks dramatically outperform classical ML algorithms (SVM, KNN, RF, LR) on this image classification task. Classical ML relies on flattened pixel features which lose spatial information critical for medical imaging.
+2. **Transfer Learning**: Pretrained models (EfficientNet, ResNet, DenseNet) with frozen backbones train efficiently in minutes while leveraging ImageNet features.
 
-3. **Frozen Backbone Efficiency**: Training only the classifier head (last layer) is sufficient for this task, reducing training time from hours to minutes.
+3. **5-Fold Cross-Validation**: ML models use stratified 5-fold CV on training data for robust performance estimation.
 
-4. **Data Quality Impact**: Duplicate removal and proper stratification ensure unbiased evaluation across all classes.
+4. **Data Quality**: Duplicate removal via MD5 hashing ensures unique samples across splits.
 
-5. **GPU Optimization**: RAM caching of preprocessed tensors eliminates I/O bottleneck, achieving near 100% GPU utilization.
+5. **GPU Optimization**: RAM caching of preprocessed tensors eliminates I/O bottleneck for DL training.
+
+### Final Results
+
+**Deep Learning Models:**
+
+| Model | Test Accuracy |
+|-------|---------------|
+| Custom CNN | **99.58%** |
+| EfficientNet-B0 | 99.16% |
+| ResNet-50 | 97.42% |
+| DenseNet-121 | 96.50% |
+
+**Machine Learning Models:**
+
+| Model | CV Mean | CV Std | Test Accuracy |
+|-------|---------|--------|---------------|
+| Random Forest | 99.92% | ±0.08% | **99.95%** |
+| KNN (Manual, k=5) | 99.86% | ±0.06% | 99.90% |
+| SVM (RBF) | 99.36% | ±0.14% | 99.48% |
+| SVM (Poly) | 98.58% | ±0.32% | 99.03% |
+| Logistic Regression | 98.53% | ±0.38% | 98.96% |
+| SVM (Linear) | 96.72% | ±0.29% | 97.10% |
+
+**All Models Ranked:**
+
+| Rank | Model | Type | Test Accuracy |
+|------|-------|------|---------------|
+| 1 | Random Forest | ML | **99.95%** |
+| 2 | KNN (Manual) | ML | 99.90% |
+| 3 | Custom CNN | DL | 99.58% |
+| 4 | SVM (RBF) | ML | 99.48% |
+| 5 | EfficientNet-B0 | DL | 99.16% |
+| 6 | SVM (Poly) | ML | 99.03% |
+| 7 | Logistic Regression | ML | 98.96% |
+| 8 | ResNet-50 | DL | 97.42% |
+| 9 | SVM (Linear) | ML | 97.10% |
+| 10 | DenseNet-121 | DL | 96.50% |
+
+### Why ML Models Match or Outperform Deep Learning
+
+Classical ML models achieved up to 99.95% accuracy, matching or exceeding deep learning. This is due to:
+
+1. **Visually Distinct Classes**: The four kidney conditions (Cyst, Normal, Stone, Tumor) have clear visual differences in texture and intensity that PCA captures effectively.
+
+2. **Effective Dimensionality Reduction**: PCA reduces 150,528 features to 100 components while retaining discriminative information, making classes linearly separable.
+
+3. **Dataset Characteristics**: CT scans from the same patient may appear in both train and test sets (original dataset not split by patient ID), benefiting simpler models.
+
+4. **Transfer Learning Limitation**: Pretrained models (ImageNet) weren't optimized for medical CT scans, while the custom CNN trained from scratch achieved 99.58%.
+
+**Conclusion**: For medical imaging with clearly distinguishable classes, classical ML with proper preprocessing can match deep learning while being faster and more interpretable.
 
 ### Training Configuration
 
-All models use:
+**Deep Learning:**
 - **Optimizer**: AdamW (weight_decay=1e-4)
 - **Scheduler**: CosineAnnealingLR (transfer learning) / OneCycleLR (custom CNN)
-- **Mixed Precision**: FP16 on CUDA for 2x speedup
+- **Mixed Precision**: FP16 on CUDA
 - **Batch Size**: 128
 - **Image Size**: 224×224
-- **Augmentation**: Horizontal flip, Vertical flip (on cached tensors)
+- **Augmentation**: Horizontal flip, Vertical flip
 
-### Evaluation Metrics
-
-Each model is evaluated on the held-out test set using:
-- **Accuracy**: Overall classification accuracy
-- **Precision/Recall/F1**: Per-class metrics
-- **Confusion Matrix**: Visual error analysis
-
-### Clinical Relevance
-
-Automated kidney CT classification can assist radiologists by:
-- Reducing diagnostic time
-- Providing second-opinion screening
-- Flagging potential tumors for priority review
-- Supporting remote/underserved healthcare facilities
+**Machine Learning:**
+- **Preprocessing**: StandardScaler → PCA (100 components)
+- **Validation**: 5-Fold Stratified Cross-Validation
+- **Image Size**: 224×224 (flattened to 150,528 features, reduced to 100 via PCA)
 
 ---
 
@@ -182,8 +221,6 @@ Automated kidney CT classification can assist radiologists by:
 - GPU: NVIDIA RTX 3090 Ti (24GB VRAM)
 - RAM: 64GB DDR5
 - Storage: NVMe SSD
-
-Training time per model: ~2-5 minutes (with RAM caching)
 
 ---
 

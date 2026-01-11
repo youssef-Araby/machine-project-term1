@@ -1,0 +1,7 @@
+{
+  "model_name": "Custom-CNN",
+  "test_accuracy": 0.995785820525533,
+  "trainable_params": 390404,
+  "total_params": 390404,
+  "epochs": 100
+}

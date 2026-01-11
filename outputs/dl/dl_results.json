@@ -1,0 +1,34 @@
+{
+  "models": [
+    {
+      "model_name": "EfficientNet-B0",
+      "test_accuracy": 0.991571641051066,
+      "trainable_params": 328964,
+      "total_params": 4336512,
+      "epochs": 20
+    },
+    {
+      "model_name": "ResNet-50",
+      "test_accuracy": 0.9742191373326723,
+      "trainable_params": 525572,
+      "total_params": 24033604,
+      "epochs": 20
+    },
+    {
+      "model_name": "DenseNet-121",
+      "test_accuracy": 0.9650470996529499,
+      "trainable_params": 263428,
+      "total_params": 7217284,
+      "epochs": 20
+    },
+    {
+      "model_name": "Custom-CNN",
+      "test_accuracy": 0.995785820525533,
+      "trainable_params": 390404,
+      "total_params": 390404,
+      "epochs": 100
+    }
+  ],
+  "best_model": "Custom-CNN",
+  "best_accuracy": 0.995785820525533
+}

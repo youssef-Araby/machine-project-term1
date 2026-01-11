@@ -1,0 +1,7 @@
+{
+  "model_name": "DenseNet-121",
+  "test_accuracy": 0.9650470996529499,
+  "trainable_params": 263428,
+  "total_params": 7217284,
+  "epochs": 20
+}

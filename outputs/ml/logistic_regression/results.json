@@ -1,0 +1,8 @@
+{
+  "model_name": "Logistic Regression",
+  "train_accuracy": 0.9946870683243013,
+  "cv_mean": 0.9853357661226377,
+  "cv_std": 0.0037825496595849484,
+  "test_accuracy": 0.9895884977689638,
+  "train_time": 6.71085524559021
+}

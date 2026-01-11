@@ -1,0 +1,54 @@
+{
+  "models": [
+    {
+      "model_name": "SVM (Linear)",
+      "train_accuracy": 0.9701413239825736,
+      "cv_mean": 0.9671666564140363,
+      "cv_std": 0.0028517306115049424,
+      "test_accuracy": 0.9709965294992563,
+      "train_time": 70.34209680557251
+    },
+    {
+      "model_name": "SVM (RBF)",
+      "train_accuracy": 0.996068430559983,
+      "cv_mean": 0.99362453813781,
+      "cv_std": 0.0013853097065243036,
+      "test_accuracy": 0.9947942488844819,
+      "train_time": 2.082967758178711
+    },
+    {
+      "model_name": "SVM (Poly)",
+      "train_accuracy": 0.9912867920518542,
+      "cv_mean": 0.9857611844440693,
+      "cv_std": 0.0032134267067649696,
+      "test_accuracy": 0.9903321764997521,
+      "train_time": 1.2913289070129395
+    },
+    {
+      "model_name": "KNN (Manual, k=5)",
+      "train_accuracy": 0.999681224099458,
+      "cv_mean": 0.9986186038400522,
+      "cv_std": 0.0006376760276254215,
+      "test_accuracy": 0.999008428358949,
+      "train_time": 1.0971760749816895
+    },
+    {
+      "model_name": "Random Forest",
+      "train_accuracy": 1.0,
+      "cv_mean": 0.9991500663411035,
+      "cv_std": 0.0007948893511780176,
+      "test_accuracy": 0.9995042141794744,
+      "train_time": 1.178889513015747
+    },
+    {
+      "model_name": "Logistic Regression",
+      "train_accuracy": 0.9946870683243013,
+      "cv_mean": 0.9853357661226377,
+      "cv_std": 0.0037825496595849484,
+      "test_accuracy": 0.9895884977689638,
+      "train_time": 6.71085524559021
+    }
+  ],
+  "best_model": "Random Forest",
+  "best_accuracy": 0.9995042141794744
+}
